@@ -1,7 +1,7 @@
-#!/usr/local/bin/bash
+#!/bin/bash
 . /usr/local/etc/colors.conf
 
-echo -e "${BLUE}START processing${RESET} ${GREEN}${UNDER}185.117.72.213/32${RESET} - ${GREEN}${UNDER}185.117.72.213.html${RESET}"
-/usr/bin/php-q /root/ionut/vhostsipv4 > /usr/local/www/apache24/data/185.117.72.213.html
-echo -e "  ${LIGHT_BLUE}END processing${RESET} ${GREEN}${UNDER}185.117.72.213/32${RESET} - ${GREEN}${UNDER}185.117.72.213.html${RESET}"
+echo -e "${BLUE}START processing${RESET} ${GREEN}${UNDER}IPv4${RESET} - ${GREEN}${UNDER}ipv4.html${RESET}"
+/usr/bin/php -q /root/ionut/vhostsIPv4 > /var/www/html/ipv4.html
+echo -e "  ${LIGHT_BLUE}END processing${RESET} ${GREEN}${UNDER}IPv4${RESET} - ${GREEN}${UNDER}ipv4.html${RESET}"
 echo -e ""
