@@ -1,7 +1,7 @@
-#!/usr/local/bin/bash
+#!/bin/bash
 . /usr/local/etc/colors.conf
 
-echo -e "${BLUE}START processing${RESET} ${GREEN}${UNDER}2610:150:8018::/56${RESET} - ${GREEN}${UNDER}clasa5.html${RESET}"
-/usr/local/bin/php -q /root/ionut/vhostsIPv6 > /usr/local/www/apache24/data/clasa5.html
-echo -e "  ${LIGHT_BLUE}END processing${RESET} ${GREEN}${UNDER}2610:150:8018::/56${RESET} - ${GREEN}${UNDER}clasa5.html${RESET}"
+echo -e "${BLUE}START processing${RESET} ${GREEN}${UNDER}IPv6${RESET} - ${GREEN}${UNDER}ipv6.html${RESET}"
+/usr/bin/php -q /root/ionut/vhostsIPv6 > /var/www/html/ipv6.html
+echo -e "  ${LIGHT_BLUE}END processing${RESET} ${GREEN}${UNDER}IPv6${RESET} - ${GREEN}${UNDER}ipv6.html${RESET}"
 echo -e ""
