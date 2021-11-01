@@ -1,0 +1,67 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>List of IRC 4 vhosts available</title>
+</head> 
+<body>
+<?php
+// Turn off all error reporting
+error_reporting(0);
+?>
+<?php
+   $result = shell_exec("date");
+   echo "<h2 align=\"center\">Last update: $result</h2>";
+   echo "<p align=\"center\"><a href=\"/ipv4.html\">IPv4</a> | <a href=\"/ipv6.html\">IPv6</a></p>";
+?>
+<table width="734" border="0" cellpadding="0" cellspacing="1" align="center">
+<tr style="background-color:#FFA500;text-align:center;">
+<td width="25%"><strong><span title="IP address">IP</span></strong></td>
+<td width="50%"><strong><span title="PTR record">PTR</span></strong></td>
+<td width="15%"><strong><span title="Reverse DNS">DNS</span></strong></td>
+<td width="10%"><strong><span title="IRC connexion /IP">Conexiuni</span></strong></td>
+</tr>
+<?php
+shell_exec("/root/ionut/netstat |grep -w -f /root/ionut/grep |grep ESTABLISHED |grep -v ircd > /root/ionut/netstatrez");
+shell_exec("ps aux > /root/ionut/psaux"); 
+$radu = file("ips");
+foreach ($radu as $line) {
+	if (preg_match("/inet /i", "$line")) {
+		;;$arg = preg_split("/[\s,]+/", $line);
+		;;$arg = preg_split("/ +/", $line);
+		$arg = preg_split("/[ +]/", $line);
+		$ip = "$arg[1]";
+		if (preg_match("/185.117.72/i", "$ip")) {
+			$hostname = gethostbyaddr($ip);
+			$reverse = gethostbyname($hostname);
+			$lines = file("/root/ionut/netstatrez");
+			$connex = 0;
+			foreach ($lines as $line_num => $line) {
+				if (preg_match("/$ip:/i", "$line")) {
+					$connex = ($connex + 1);
+					$total = ($total + 1);
+				}
+			}
+			if ($ip == $reverse) {
+				$status = "!";
+				$lol = ($lol + 1);
+			} else {
+				$status = "bad";
+			}
+			if ($hostname == $ip) {
+				$status = "good";
+			}
+			echo "<tr style=\"background-color:#EEEEEE;\"> \n <td width=\"25%\" align=\"center\"> $ip </td> \n <td width=\"50%\" align=\"center\"> $hostname / $reverse </td> \n <td width=\"15%\" align=\"center\">$status</td> \n <td width=\"10%\" align=\"center\"> $connex </td> \n </tr> \n";
+		}
+	}
+}
+?>
+<tr style="background-color:#FFA500;text-align:center;">
+<td width="25%" align="center">We have a total of</td>
+<td width="50%" align="center"><strong><?php echo $lol; ?></strong> available vhosts.</td>
+<td width="15%" align="center">OK</td>
+<td width="10%" align="center"><?php echo $total; ?></td>
+</tr>
+</table>
+<p align="center">Copyright &copy; 2003-2021 Ionut &#171; <a href="http://www.ionut.men/" target="_blank">Ionut.Men</a> &#187; I can't be a legend yet. I'm not dead.<br />
+</body>
+</html>
