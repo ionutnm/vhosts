@@ -1,24 +1,23 @@
-#!/usr/local/bin/php
+#!/usr/bin/php
 <?php
 // Turn off all error reporting
 error_reporting(0);
 ?>
 <?php
-$radu = shell_exec("sockstat -6 -u");
+$radu = shell_exec("ss -6n");
 $radu = explode("\n", $radu);
 $sl = file("/etc/passwd");
-foreach($radu as $line) {
-if($line) {
-$lol = preg_split("/[\s,]+/", $line);
-$user = $lol[0];
-foreach($sl as $muc) {
-$kk = explode(":", $muc);
-if($kk[0] == $user) {
-$uid = $kk[2];
+foreach ($radu as $line) {
+	if ($line) {
+		$lol = preg_split("/[\s,]+/", $line);
+		$user = $lol[0];
+		foreach ($sl as $muc) {
+			$kk = explode(":", $muc);
+			if ($kk[0] == $user) {
+				$uid = $kk[2];
+			}
+		}
+		echo "tcp6 0 0 $lol[4] $lol[5] ESTABLISHED $uid 453338936 $lol[2]/$lol[1]\n";
+	}
 }
-}
-echo "tcp6 0 0 $lol[5] $lol[6] ESTABLISHED $uid 453338936 $lol[2]/$lol[1] 
-\n";
-}
-}
-?> 
+?>
